@@ -67,6 +67,8 @@ import LearningTrends from './components/LearningTrends';
 import TutorDashboard from './components/TutorDashboard';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import StudentDashboard from './components/StudentDashboard'; 
+import MessagePage from './components/MessagePage';
 import './App.css';
 
 function App() {
@@ -82,6 +84,8 @@ function App() {
           <Route path="/trends" element={<LearningTrends />} />
           <Route path="/tutor" element={<TutorDashboard />} />
           <Route path="/" element={<Login />} /> {/* Removed `exact` - not needed in v6 */}
+          <Route path="/student" element={<StudentDashboard />}/>
+          <Route path="/messages" element={<MessagePage />}/> 
         </Routes>
       </div>
     </BrowserRouter>

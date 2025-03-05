@@ -69,6 +69,8 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import CreateTask from './components/CreateTask';
 import ViewTasks from './components/ViewTasks';
+import StudentDashboard from './components/StudentDashboard'; 
+import MessagePage from './components/MessagePage';
 import './App.css';
 
 function App() {
@@ -87,6 +89,8 @@ function App() {
           <Route path="/" element={<ViewTasks />} />  {/*  Default to ViewTasks */}
           <Route path="/view-tasks" element={<ViewTasks />} /> {/* New Route */}
           <Route path="/" element={<Login />} /> {/* Removed `exact` - not needed in v6 */}
+          <Route path="/student" element={<StudentDashboard />}/>
+          <Route path="/messages" element={<MessagePage />}/> 
         </Routes>
       </div>
     </BrowserRouter>

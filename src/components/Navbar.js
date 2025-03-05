@@ -36,7 +36,9 @@ function Navbar() {
                 <li><Link to="/tutor">Tutor Dashboard</Link></li>
               )}
               {/* Logout option */}
-              <li><Link to="/login" onClick={() => localStorage.removeItem('role')}>Logout</Link></li>
+                              <li><Link to="/login" onClick={() => localStorage.removeItem('role')}>Logout</Link></li>
+            <li><Link to="/student">Student Dashboard</Link></li> 
+            <li><Link to="/messages">Messages</Link></li> 
             </>
           )}
         </ul>

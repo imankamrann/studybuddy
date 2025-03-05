@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <nav>
       <div className="nav-container">
-       <div className="logo">
+        <div className="logo">
           <Link to="/">
             <img src="/studyBuddyLogo.svg" alt="Study Buddy Logo" className="logo-img" />
             Study Buddy
@@ -16,7 +16,7 @@ function Navbar() {
         </div>
 
         {/* Navigation links or sign options */}
-        <ul >
+        <ul>
           {!isLoggedIn ? (
             // Show Sign In/Sign Up if not logged in
             <>
@@ -30,6 +30,8 @@ function Navbar() {
               <li><Link to="/schedule">Schedule</Link></li>
               <li><Link to="/recommendations">Study Tips</Link></li>
               <li><Link to="/trends">Trends</Link></li>
+              <li><Link to="/create-task">Create Task</Link></li> {/* New Link for Create Task */}
+              <li><Link to="/view-tasks">View Tasks</Link></li> {/* New Link for View Tasks */}
               {localStorage.getItem('role') === 'tutor' && (
                 <li><Link to="/tutor">Tutor Dashboard</Link></li>
               )}

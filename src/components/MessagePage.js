@@ -7,8 +7,11 @@ const MessagePage = () => {
     // State for managing the new message input
     const [newMessage, setNewMessage] = useState('');
 
+    // State for managing the new conversation input
+    const [newConversationRecipient, setNewConversationRecipient] = useState('');
+
     // Sample data for messages
-    const conversations = [
+    const [conversations, setConversations] = useState([
         {
             id: 1,
             sender: 'Tutor',
@@ -31,7 +34,7 @@ const MessagePage = () => {
                 { text: 'New notes uploaded.', timestamp: '10/20, 2:00 PM' },
             ],
         },
-    ];
+    ]);
 
     // Function to handle sending a new message
     const handleSendMessage = () => {
@@ -49,8 +52,33 @@ const MessagePage = () => {
         // Update the selected conversation
         setSelectedConversation(updatedConversation);
 
+        // Update the conversations list
+        setConversations((prevConversations) =>
+            prevConversations.map((conversation) =>
+                conversation.id === updatedConversation.id ? updatedConversation : conversation
+            )
+        );
+
         // Clear the input field
         setNewMessage('');
+    };
+
+    // Function to handle starting a new conversation
+    const handleStartNewConversation = () => {
+        if (newConversationRecipient.trim() === '') return;
+
+        // Create a new conversation object
+        const newConversation = {
+            id: conversations.length + 1, // Generate a new ID
+            sender: newConversationRecipient,
+            messages: [],
+        };
+
+        // Add the new conversation to the list
+        setConversations([...conversations, newConversation]);
+
+        // Clear the input field
+        setNewConversationRecipient('');
     };
 
     return (
@@ -59,12 +87,17 @@ const MessagePage = () => {
             <div style={{ display: 'flex' }}>
                 {/* Message Inbox */}
                 <div style={{ width: '30%', borderRight: '1px solid #ccc', paddingRight: '20px' }}>
-                    <input
-                        type="text"
-                        placeholder="Search for messages..."
-                        style={{ width: '100%', padding: '10px', marginBottom: '20px', border: '1px solid #ccc', borderRadius: '5px' }}
-                        onChange={(e) => console.log('Search:', e.target.value)} // Add search functionality
-                    />
+                    {/* Button to start a new conversation */}
+                    <div style={{ marginBottom: '20px' }}>
+                        <button
+                            onClick={handleStartNewConversation}
+                            style={{ width: '100%', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                        >
+                            Start New Conversation
+                        </button>
+                    </div>
+
+                    {/* List of conversations */}
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                         {conversations.map((conversation) => (
                             <li
@@ -78,8 +111,8 @@ const MessagePage = () => {
                                 }}
                             >
                                 <strong>{conversation.sender}</strong>
-                                <p>{conversation.messages[0].text}</p>
-                                <em>{conversation.messages[0].timestamp}</em>
+                                <p>{conversation.messages[0]?.text || 'No messages yet'}</p>
+                                <em>{conversation.messages[0]?.timestamp || ''}</em>
                             </li>
                         ))}
                     </ul>

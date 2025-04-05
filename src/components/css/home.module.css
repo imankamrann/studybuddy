@@ -1,0 +1,46 @@
+/* src/components/css/home.module.css */
+
+.hero_section {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.hero_container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero_container h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.hero_container h1 span {
+  color: #007bff;
+}
+
+.demo_container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+}
+
+.get_started_button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.get_started_button:hover {
+  background-color: #0056b3;
+}

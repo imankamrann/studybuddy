@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
 nav ul {
@@ -8,17 +10,8 @@ nav ul {
   display: flex;
   justify-content: center;
   background-color: #f0f0f0;
-  padding: 10px;
+  /* padding: 10px; */
 }
-/* 
-nav ul li {
-  margin: 0 10px;
-} */
-
-/* nav ul li a {
-  text-decoration: none;
-  color: #333;
-} */
 
 nav ul li a {
   text-decoration: none;
@@ -58,7 +51,8 @@ nav {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px; /* Adds horizontal padding for spacing */
+  padding: 0 10px; 
+  /* Adds horizontal padding for spacing */
 }
 
 
@@ -79,7 +73,8 @@ nav {
     background-color: #0056b3;
   text-decoration: none; /* Removes underline from links */
   color: white; 
-  padding: 8px 16px; /* Consistent button padding */
+  /* padding: 8px 16px; */
+   /* Consistent button padding */
   border-radius: 4px; /* Rounded corners for buttons */
   transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
  
@@ -90,6 +85,8 @@ nav {
 .logo {
   display: flex; /* Uses flexbox for alignment */
   align-items: center; /* Centers image and text horizontally */
+    /* padding: 0 10px;  */
+     padding-left: 10px;
 }
 
 .logo-img {

@@ -9,7 +9,7 @@ function Navbar() {
     <nav>
       <div className="nav-container">
         <div className="logo">
-          <Link to="/">
+          <Link to="/home">
             <img src="/studyBuddyLogo.svg" alt="Study Buddy Logo" className="logo-img" />
             Study Buddy
           </Link>
@@ -20,8 +20,8 @@ function Navbar() {
           {!isLoggedIn ? (
             // Show Sign In/Sign Up if not logged in
             <>
-              <li><Link to="/login">Sign In</Link></li>
-              <li><Link to="/signup">Sign Up</Link></li>
+               <li><Link to="/signup">Sign up</Link></li>
+              <li><Link to="/login">Log in</Link></li>
             </>
           ) : (
             // Show app features if logged in

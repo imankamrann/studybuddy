@@ -77,40 +77,6 @@ This project uses Create React App, so the following scripts are available:
 * **`npm run build` (or `yarn build`)**: Builds the app for production. The optimized build is created in the `build` folder.
 * **`npm run eject` (or `yarn eject`)**: (Use with caution!) This command allows you to customize the build process by copying all configuration files into your project. It's a one-way operation.
 
-## Code Structure
-
-Here's a simplified overview of the project's directory structure:
-
-study-buddy/
-├── public/
-│   └── index.html
-│   └── favicon.ico
-│   └── studyBuddyLogo.svg
-│   └── ... (other static assets)
-├── src/
-│   ├── components/
-│   │   ├── AssignmentTracker.js
-│   │   ├── CreateTask.js
-│   │   ├── Home.js
-│   │   ├── LearningTrends.js
-│   │   ├── Login.js
-│   │   ├── Navbar.js
-│   │   ├── Signup.js
-│   │   ├── StudyScheduler.js
-│   │   ├── TutorDashboard.js
-│   │   └── ViewTasks.js
-│   ├── css/
-│   │   ├── App.css
-│   │   ├── home.module.css
-│   │   └── ... (other component-specific CSS modules)
-│   ├── App.js
-│   ├── index.js
-│   └── ... (other source files)
-├── package.json
-├── README.md
-└── ... (other project files)
-
-
 ## Future Enhancements
 
 * Implement more robust user authentication and authorization.

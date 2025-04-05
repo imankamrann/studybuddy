@@ -31,7 +31,7 @@
 
 .get_started_button {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #875bf7;
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
@@ -41,6 +41,6 @@
   margin-bottom: 10px;
 }
 
-.get_started_button:hover {
-  background-color: #0056b3;
-}
+/* .get_started_button:hover {
+  background-color: #501ad7;
+} */

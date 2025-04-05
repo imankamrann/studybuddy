@@ -91,7 +91,8 @@ const MessagePage = () => {
                     <div style={{ marginBottom: '20px' }}>
                         <button
                             onClick={handleStartNewConversation}
-                            style={{ width: '100%', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                            style={{ width: '100%', padding: '10px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                            className='nav-button'
                         >
                             Start New Conversation
                         </button>

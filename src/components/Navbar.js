@@ -62,7 +62,7 @@ function Navbar() {
     <nav>
       <div className="nav-container">
         <div className="logo">
-          <Link to="/home">
+          <Link to="/">
             <img src="/studyBuddyLogo.svg" alt="Study Buddy Logo" className="logo-img" />
             Study Buddy
           </Link>

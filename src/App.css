@@ -1,51 +1,9 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+  padding-left: 150px;
+  padding-right: 150px;
 }
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
-  padding: 10px;
-}
-/* 
-nav ul li {
-  margin: 0 10px;
-} */
-
-/* nav ul li a {
-  text-decoration: none;
-  color: #333;
-} */
-
-nav ul li a {
-  text-decoration: none;
-  color: black;
-  padding: 8px 16px;
-  border-radius: 4px;
-}
-
-input, select, button, textarea {
-  margin: 5px;
-  padding: 5px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 4px; /* Rounded corners for buttons */
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* nav bar */
 
 nav {
   background-color: #f0f0f0;
@@ -58,50 +16,66 @@ nav {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px; /* Adds horizontal padding for spacing */
+  padding: 0 10px;
 }
 
-
- .nav-links {
-  list-style: none; /* Removes bullet points */
-  display: flex; /* Uses flexbox for horizontal layout */
-  margin: 0; /* Removes default margin */
-  padding: 0; /* Removes default padding */
-  align-items: center; /* Vertically centers links/buttons */
-  gap: 10px; /* Ensures even spacing between buttons/links */
-}
-
-.nav-links li {
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end; /* Align items to the end (right) */
+  align-items: center; /* Vertically center items */
+  background-color: #f0f0f0;
+  padding: 0;
   margin: 0;
 }
 
-.nav-links a {
-    background-color: #0056b3;
-  text-decoration: none; /* Removes underline from links */
-  color: white; 
-  padding: 8px 16px; /* Consistent button padding */
-  border-radius: 4px; /* Rounded corners for buttons */
-  transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
- 
+nav ul li {
+  margin-left: 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333; /* Default link color */
+  /* padding: 8px 16px; */
+}
+
+.nav-button a { 
+  color: white;
+  text-decoration: none; /* Redundant, but good to be explicit */
+}
+
+.nav-button { /* Renamed for clarity */
+  display: inline-block;
+  background-color: #875bf7;
+  color: white;
+  padding: 8px 16px; 
+  border-radius: 4px; 
+  text-decoration: none;
+  transition: background-color 0.3s ease; 
+
 }
 
 
+.nav-button:hover {
+  background-color: #5d30ce;
+}
 
 .logo {
-  display: flex; /* Uses flexbox for alignment */
-  align-items: center; /* Centers image and text horizontally */
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-weight: bold;
 }
 
 .logo-img {
-  height: 48px; /* Adjust size to match your logo (change if needed) */
-  width: auto; /* Maintains aspect ratio */
-  margin-right: 16px; /* Adds space to the right of the image */
+  height: 48px;
+  width: auto;
+  margin-right: 16px;
 }
 
 .logo a {
-  text-decoration: none; /* Removes underline from link */
-  color: #333; /* Matches your nav text color (dark gray) */
-  display: flex; /* Ensures link contents align together */
-  align-items: center; /* Keeps text and image vertically aligned */
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
 }
-

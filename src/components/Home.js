@@ -37,7 +37,7 @@
 
 import React from 'react';
 import styles from "./css/home.module.css";
-import Image from 'react-bootstrap/Image';
+//import Image from 'react-bootstrap/Image';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export default function Home() {
@@ -52,9 +52,9 @@ export default function Home() {
     <section id={styles.hero_section}>
       <div id={styles.hero_container}>
         <h1 style={{ marginTop: '40px' }}>Organize Your Learning, Effortlessly with <span>Study Buddy</span> 📚✨</h1>
-        <div id={styles.mascot_container}>
-          <Image id={styles.study_buddy_mascot} src="/studyingGirl.jpg" alt="Friendly Study Buddy Mascot" fluid priority={true} />
-        </div>
+              {/* <div id={styles.mascot_container}>
+   <Image id={styles.study_buddy_mascot} src="/studyingGirl.jpg" alt="Friendly Study Buddy Mascot" fluid priority={true} />
+ </div> */}
         <div id={styles.demo_container}>
           <div id={styles.demo_snippet} onClick={null}>
             {/* ... */}

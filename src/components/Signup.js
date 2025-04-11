@@ -1,179 +1,5 @@
-// import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
-
-// function Signup() {
-//   const [firstName, setFirstName] = useState('');
-//   const [lastName, setLastName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [confirmPassword, setConfirmPassword] = useState('');
-//   const [role, setRole] = useState('student');
-//   const [quizInterests, setQuizInterests] = useState([]);
-//   const [otherInterest, setOtherInterest] = useState('');
-//   const availableInterests = ['Math', 'Science', 'History', 'Literature', 'Programming'];
-
-//   const handleInterestChange = (interest) => {
-//     if (quizInterests.includes(interest)) {
-//       setQuizInterests(quizInterests.filter((item) => item !== interest));
-//     } else {
-//       setQuizInterests([...quizInterests, interest]);
-//     }
-//   };
-
-//   const handleSignup = (e) => {
-//     e.preventDefault();
-//     if (!firstName || !lastName || !email || !password) {
-//       alert('Please fill in all required fields.');
-//       return;
-//     }
-//     if (password !== confirmPassword) {
-//       alert('Passwords do not match.');
-//       return;
-//     }
-//     if (password.length < 6) {
-//       alert('Password must be at least 6 characters long.');
-//       return;
-//     }
-
-//     const signupData = {
-//       firstName,
-//       lastName,
-//       email,
-//       password,
-//       role,
-//       quizInterests: [...quizInterests, ...(otherInterest ? [otherInterest] : [])],
-//     };
-
-//     // **Simulating Backend - Storing user data in localStorage (NOT SECURE)**
-//     const existingUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-//     const isEmailTaken = existingUsers.some(user => user.email === email);
-
-//     if (isEmailTaken) {
-//       alert('This email address is already registered.');
-//       return;
-//     }
-
-//     existingUsers.push(signupData);
-//     localStorage.setItem('users', JSON.stringify(existingUsers));
-//     localStorage.setItem('currentUserEmail', email); // Simulate login
-//     localStorage.setItem('currentUserRole', role);
-//     localStorage.setItem('currentUserInterests', JSON.stringify(signupData.quizInterests));
-
-//     alert('Sign up successful! User data stored in browser (localStorage - NOT SECURE).');
-//     window.location.href = role === 'student' ? '/assignments' : '/tutor'; // Redirect based on role
-//   };
-
-//   return (
-//     <div
-//       style={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//         minHeight: '100vh',
-//         justifyContent: 'center',
-//       }}
-//     >
-//       <div style={{ width: '500px', maxWidth: '90%' }}>
-//         <h2 style={{ marginBottom: '40px', marginTop: '40px', textAlign: 'center' }}>
-//           Sign Up for Study Buddy
-//         </h2>
-//         <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-//           <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
-//             <input
-//               type="text"
-//               placeholder="First Name"
-//               value={firstName}
-//               onChange={(e) => setFirstName(e.target.value)}
-//               required
-//               style={{ fontSize: '16px', padding: '8px', width: '50%', boxSizing: 'border-box' }}
-//             />
-//             <input
-//               type="text"
-//               placeholder="Last Name"
-//               value={lastName}
-//               onChange={(e) => setLastName(e.target.value)}
-//               required
-//               style={{ fontSize: '16px', padding: '8px', width: '50%', boxSizing: 'border-box' }}
-//             />
-//           </div>
-//           <input
-//             type="email"
-//             placeholder="Email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//             style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-//           />
-//           <input
-//             type="password"
-//             placeholder="Password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//             style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-//           />
-//           <input
-//             type="password"
-//             placeholder="Confirm Password"
-//             value={confirmPassword}
-//             onChange={(e) => setConfirmPassword(e.target.value)}
-//             required
-//             style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-//           />
-//           <label style={{ fontSize: '16px' }}>
-//             Role:
-//             <select value={role} onChange={(e) => setRole(e.target.value)} style={{ fontSize: '16px', padding: '8px', marginLeft: '8px', boxSizing: 'border-box' }}>
-//               <option value="student">Student</option>
-//               <option value="tutor">Tutor</option>
-//             </select>
-//           </label>
-
-//           <h3 style={{ marginTop: '20px', fontSize: '18px', textAlign: 'center' }}>Personalize Your Quiz Interests:</h3>
-//           <p style={{ textAlign: 'center', fontSize: '16px' }}>Select topics you'd like to see in your personalized quizzes:</p>
-//           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
-//             {availableInterests.map((interest) => (
-//               <label key={interest} style={{ fontSize: '16px', display: 'flex', alignItems: 'center' }}>
-//                 <input
-//                   type="checkbox"
-//                   value={interest}
-//                   checked={quizInterests.includes(interest)}
-//                   onChange={() => handleInterestChange(interest)}
-//                   style={{ marginRight: '8px' }}
-//                 />
-//                 {interest}
-//               </label>
-//             ))}
-//           </div>
-//           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
-//             <label htmlFor="otherInterest" style={{ fontSize: '16px' }}>
-//               Other Interest:
-//             </label>
-//             <input
-//               type="text"
-//               id="otherInterest"
-//               placeholder="Enter another interest"
-//               value={otherInterest}
-//               onChange={(e) => setOtherInterest(e.target.value)}
-//               style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-//             />
-//           </div>
-
-//           <button type="submit" className="nav-button" style={{ fontSize: '16px', padding: '10px 16px', width: '100%', boxSizing: 'border-box', marginTop: '20px' }}>
-//             Sign Up
-//           </button>
-//         </form>
-//         <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '16px' }}>
-//           Already have an account? <Link to="/login">Log In</Link>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Signup;
-
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [firstName, setFirstName] = useState('');
@@ -185,168 +11,117 @@ function Signup() {
   const [quizInterests, setQuizInterests] = useState([]);
   const [otherInterest, setOtherInterest] = useState('');
   const availableInterests = ['Math', 'Science', 'History', 'Literature', 'Programming'];
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const inputStyle = {
+    padding: '10px',
+    fontSize: '15px',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    boxSizing: 'border-box',
+    width: '100%',
+  };
+
+  const labelStyle = {
+    fontSize: '15px',
+    fontWeight: '500',
+    color: '#374151',
+  };
 
   const handleInterestChange = (interest) => {
-    if (quizInterests.includes(interest)) {
-      setQuizInterests(quizInterests.filter((item) => item !== interest));
-    } else {
-      setQuizInterests([...quizInterests, interest]);
-    }
+    setQuizInterests((prev) =>
+      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    );
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    if (!firstName || !lastName || !email || !password) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-    if (password.length < 6) {
-      alert('Password must be at least 6 characters long.');
-      return;
-    }
+    if (!firstName || !lastName || !email || !password) return alert('Fill in all required fields.');
+    if (password !== confirmPassword) return alert('Passwords do not match.');
+    if (password.length < 6) return alert('Password must be at least 6 characters.');
 
-    const signupData = {
-      firstName,
-      lastName,
-      email,
-      password,
-      role,
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    if (existingUsers.some((u) => u.email === email)) return alert('Email already registered.');
+
+    const newUser = {
+      firstName, lastName, email, password, role,
       quizInterests: [...quizInterests, ...(otherInterest ? [otherInterest] : [])],
     };
 
-    // **Simulating Backend - Storing user data in localStorage (NOT SECURE)**
-    const existingUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-    const isEmailTaken = existingUsers.some(user => user.email === email);
-
-    if (isEmailTaken) {
-      alert('This email address is already registered.');
-      return;
-    }
-
-    existingUsers.push(signupData);
-    localStorage.setItem('users', JSON.stringify(existingUsers));
-    localStorage.setItem('currentUserEmail', email); // Simulate login
+    localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
+    localStorage.setItem('currentUserEmail', email);
     localStorage.setItem('currentUserRole', role);
-    localStorage.setItem('currentUserInterests', JSON.stringify(signupData.quizInterests));
-
-    alert('Sign up successful! User data stored in browser (localStorage - NOT SECURE).');
-    navigate(role === 'student' ? '/assignments' : '/tutor'); // Redirect based on role
-  };
-
-  const handleLoginClick = () => { // Function to handle login navigation
-    navigate('/login');
+    localStorage.setItem('currentUserInterests', JSON.stringify(newUser.quizInterests));
+    alert('Sign up successful!');
+    navigate(role === 'student' ? '/assignments' : '/tutor');
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '100vh',
-        justifyContent: 'center',
-      }}
-    >
-      <div style={{ width: '500px', maxWidth: '90%' }}>
-        <h2 style={{ marginBottom: '40px', marginTop: '40px', textAlign: 'center' }}>
-          Sign Up for Study Buddy
+    <div style={{
+      display: 'flex', justifyContent: 'center', alignItems: 'center',
+      minHeight: '100vh', backgroundColor: '#f9fafb', padding: '30px',
+    }}>
+      <div style={{
+        backgroundColor: '#fff', padding: '40px', borderRadius: '16px',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)', width: '100%', maxWidth: '600px'
+      }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '24px', fontSize: '24px', fontWeight: 600 }}>
+          Sign Up for Study Buddy 📚
         </h2>
-        <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              style={{ fontSize: '16px', padding: '8px', width: '50%', boxSizing: 'border-box' }}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-              style={{ fontSize: '16px', padding: '8px', width: '50%', boxSizing: 'border-box' }}
-            />
+
+        <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} style={inputStyle} required />
+            <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} style={inputStyle} required />
           </div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-          />
-          <label style={{ fontSize: '16px' }}>
+
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={inputStyle} required />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={inputStyle} required />
+          <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} style={inputStyle} required />
+
+          <label style={labelStyle}>
             Role:
-            <select value={role} onChange={(e) => setRole(e.target.value)} style={{ fontSize: '16px', padding: '8px', marginLeft: '8px', boxSizing: 'border-box' }}>
+            <select value={role} onChange={(e) => setRole(e.target.value)} style={{ ...inputStyle, marginTop: '8px' }}>
               <option value="student">Student</option>
               <option value="tutor">Tutor</option>
             </select>
           </label>
 
-          <h3 style={{ marginTop: '20px', fontSize: '18px', textAlign: 'center' }}>Personalize Your Quiz Interests:</h3>
-          <p style={{ textAlign: 'center', fontSize: '16px' }}>Select topics you'd like to see in your personalized quizzes:</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
-            {availableInterests.map((interest) => (
-              <label key={interest} style={{ fontSize: '16px', display: 'flex', alignItems: 'center' }}>
-                <input
-                  type="checkbox"
-                  value={interest}
-                  checked={quizInterests.includes(interest)}
-                  onChange={() => handleInterestChange(interest)}
-                  style={{ marginRight: '8px' }}
-                />
-                {interest}
-              </label>
-            ))}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
-            <label htmlFor="otherInterest" style={{ fontSize: '16px' }}>
-              Other Interest:
-            </label>
-            <input
-              type="text"
-              id="otherInterest"
-              placeholder="Enter another interest"
-              value={otherInterest}
-              onChange={(e) => setOtherInterest(e.target.value)}
-              style={{ fontSize: '16px', padding: '8px', width: '100%', boxSizing: 'border-box' }}
-            />
+          <div>
+            <h3 style={{ fontSize: '17px', fontWeight: '600', marginBottom: '8px' }}>Quiz Interests</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              {availableInterests.map((interest) => (
+                <label key={interest} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '15px' }}>
+                  <input type="checkbox" value={interest} checked={quizInterests.includes(interest)} onChange={() => handleInterestChange(interest)} />
+                  {interest}
+                </label>
+              ))}
+            </div>
           </div>
 
-          <button type="submit" className="nav-button" style={{ fontSize: '16px', padding: '10px 16px', width: '100%', boxSizing: 'border-box', marginTop: '20px' }}>
+          <div>
+            <label htmlFor="otherInterest" style={labelStyle}>Other Interest:</label>
+            <input type="text" id="otherInterest" placeholder="Enter another interest" value={otherInterest} onChange={(e) => setOtherInterest(e.target.value)} style={inputStyle} />
+          </div>
+
+          <button type="submit" style={{
+            backgroundColor: '#8b5cf6', color: '#fff', padding: '12px',
+            fontSize: '16px', fontWeight: '600', borderRadius: '8px',
+            marginTop: '10px', cursor: 'pointer', border: 'none',
+          }}>
             Sign Up
           </button>
         </form>
-        <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '16px' }}>
+
+        <p style={{ marginTop: '20px', textAlign: 'center' }}>
           Already have an account?
-          <button type="button" onClick={handleLoginClick} className="nav-button" style={{ fontSize: '16px', padding: '10px 16px', boxSizing: 'border-box', marginLeft: '10px' }}>
+          <Link to="/login" style={{
+            marginLeft: '10px', backgroundColor: '#6366f1', color: '#fff',
+            padding: '8px 14px', fontSize: '14px', borderRadius: '6px',
+            textDecoration: 'none',
+          }}>
             Log In
-          </button>
+          </Link>
         </p>
       </div>
     </div>

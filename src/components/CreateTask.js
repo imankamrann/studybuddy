@@ -1,111 +1,3 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const CreateTask = () => {
-//   const [task, setTask] = useState({
-//     title: "",
-//     description: "",
-//     dueDate: "",
-//     priority: "Medium",
-//   });
-
-//   const navigate = useNavigate();
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setTask((prevTask) => ({
-//       ...prevTask,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Task Created:", task);
-//     // You can add a POST request here to save the task to your backend
-//     navigate("/tasks"); // Redirect to the tasks list page after creating a task
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-//       <h2 className="text-2xl font-bold mb-4">Create a New Task</h2>
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
-//       >
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2">
-//             Task Title
-//           </label>
-//           <input
-//             type="text"
-//             name="title"
-//             value={task.title}
-//             onChange={handleChange}
-//             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-//             required
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2">
-//             Description
-//           </label>
-//           <textarea
-//             name="description"
-//             value={task.description}
-//             onChange={handleChange}
-//             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-//             rows="4"
-//             required
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2">
-//             Due Date
-//           </label>
-//           <input
-//             type="date"
-//             name="dueDate"
-//             value={task.dueDate}
-//             onChange={handleChange}
-//             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-//             required
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block text-gray-700 text-sm font-bold mb-2">
-//             Priority
-//           </label>
-//           <select
-//             name="priority"
-//             value={task.priority}
-//             onChange={handleChange}
-//             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-//           >
-//             <option value="Low">Low</option>
-//             <option value="Medium">Medium</option>
-//             <option value="High">High</option>
-//           </select>
-//         </div>
-
-//         <div className="flex items-center justify-between">
-//           <button
-//             type="submit"
-//             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-//           >
-//             Create Task
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default CreateTask;
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -129,101 +21,144 @@ const CreateTask = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Task Created:", task);
-    // You can add a POST request here to save the task to your backend
-    navigate("/tasks"); // Redirect to the tasks list page after creating a task
+
+    // Save to localStorage (for demo purposes)
+    const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const updatedTasks = [...existingTasks, task];
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+    // Reset form
+    setTask({
+      title: "",
+      description: "",
+      dueDate: "",
+      priority: "Medium",
+    });
+
+    // Redirect
+    navigate("/task-confirmation");
   };
 
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        // justifyContent: "center",
+        backgroundColor: "#f9fafb",
+        padding: "20px",
       }}
     >
-      <div style={{ width: "500px", maxWidth: "90%" }}>
-        <h2 style={{ marginBottom: "40px", marginTop: "40px", textAlign: "center" }}>
-          Create a New Task
-        </h2>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          backgroundColor: "#ffffff",
+          padding: "30px",
+          borderRadius: "12px",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <h2
+          style={{
+            marginBottom: "24px",
+            textAlign: "center",
+            fontSize: "24px",
+            fontWeight: "600",
+            color: "#1f2937",
+          }}
         >
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-            Task Title
-          </label>
+          📝 Create a New Task
+        </h2>
+
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <label htmlFor="title" style={labelStyle}>Task Title</label>
           <input
             type="text"
             id="title"
             name="title"
             value={task.title}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
-            style={{ fontSize: "16px", padding: "8px", width: "100%", boxSizing: "border-box" }}
+            style={inputStyle}
           />
 
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-            Description
-          </label>
+          <label htmlFor="description" style={labelStyle}>Description</label>
           <textarea
             id="description"
             name="description"
             value={task.description}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             rows="4"
             required
-            style={{ fontSize: "16px", padding: "8px", width: "100%", boxSizing: "border-box" }}
+            style={{ ...inputStyle, resize: "vertical" }}
           />
 
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dueDate">
-            Due Date
-          </label>
+          <label htmlFor="dueDate" style={labelStyle}>Due Date</label>
           <input
             type="date"
             id="dueDate"
             name="dueDate"
             value={task.dueDate}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
-            style={{ fontSize: "16px", padding: "8px", width: "100%", boxSizing: "border-box" }}
+            style={inputStyle}
           />
 
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priority">
-            Priority
-          </label>
+          <label htmlFor="priority" style={labelStyle}>Priority</label>
           <select
             id="priority"
             name="priority"
             value={task.priority}
             onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            style={{ fontSize: "16px", padding: "8px", width: "100%", boxSizing: "border-box" }}
+            style={inputStyle}
           >
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-          <div className="flex items-center justify-center">
-            <button
-              type="submit"
-             className="nav-button"
-            style={{ fontSize: '16px', padding: '10px 16px', width: '100%', boxSizing: 'border-box' }}
-            >
-              Create Task
-            </button>
 
-            
-          </div>
+          <button
+            type="submit"
+            style={buttonStyle}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#7c3aed")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#8b5cf6")}
+          >
+            Create Task
+          </button>
         </form>
       </div>
     </div>
   );
+};
+
+// 🎨 Styles
+const inputStyle = {
+  padding: "10px",
+  fontSize: "16px",
+  border: "1px solid #d1d5db",
+  borderRadius: "8px",
+  boxSizing: "border-box",
+  width: "100%",
+};
+
+const labelStyle = {
+  fontSize: "14px",
+  fontWeight: "500",
+  color: "#374151",
+};
+
+const buttonStyle = {
+  backgroundColor: "#8b5cf6",
+  color: "#fff",
+  padding: "12px 16px",
+  border: "none",
+  borderRadius: "8px",
+  fontSize: "16px",
+  fontWeight: "600",
+  cursor: "pointer",
+  transition: "background-color 0.2s ease-in-out",
 };
 
 export default CreateTask;

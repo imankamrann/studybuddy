@@ -14,6 +14,7 @@ import MessagePage from './components/MessagePage';
 import './App.css';
 import Signup from './components/Signup';
 import Home from './components/Home.js';
+import TaskConfirmation from './components/TaskConfirmation'; // 
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/" element={<Login />} /> {/* Removed `exact` - not needed in v6 */}
           <Route path="/student" element={<StudentDashboard />}/>
           <Route path="/messages" element={<MessagePage />}/> 
+          <Route path="/task-confirmation" element={<TaskConfirmation />} />
         </Routes>
       </div>
     </BrowserRouter>

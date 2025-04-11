@@ -1,102 +1,130 @@
-// import { color } from 'chart.js/helpers';
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// function Navbar() {
-//   // Check if user is logged in (simplified, using localStorage as before)
-//   const isLoggedIn = localStorage.getItem('role'); // Returns 'student', 'tutor', or null
-
-//   return (
-//     <nav>
-//       <div className="nav-container">
-//         <div className="logo">
-//           <Link to="/home">
-//             <img src="/studyBuddyLogo.svg" alt="Study Buddy Logo" className="logo-img" />
-//             Study Buddy
-//           </Link>
-//         </div>
-
-//         {/* Navigation links or sign options */}
-//         <ul>
-//           {!isLoggedIn ? (
-//             // Show Sign In/Sign Up if not logged in
-//             <>
-//               <li><Link to="/signup">Sign up</Link></li>
-//               <li id="login-btn" ><Link to="/login">Log in</Link></li>
-//             </>
-//           ) : (
-//             // Show app features if logged in
-//             <>
-//               <li><Link to="/assignments">Assignments</Link></li>
-//               <li><Link to="/schedule">Schedule</Link></li>
-//               <li><Link to="/recommendations">Study Tips</Link></li>
-//               <li><Link to="/trends">Trends</Link></li>
-//               <li><Link to="/create-task">Create Task</Link></li> {/* New Link for Create Task */}
-//               <li><Link to="/view-tasks">View Tasks</Link></li> {/* New Link for View Tasks */}
-//               {localStorage.getItem('role') === 'tutor' && (
-//                 <li><Link to="/tutor">Tutor Dashboard</Link></li>
-//               )}
-//               {/* Logout option */}
-           
-//             <li><Link to="/student">Student Dashboard</Link></li> 
-//                 <li><Link to="/messages">Messages</Link></li> 
-//             <li id="login-btn"><Link to="/login" onClick={() => localStorage.removeItem('role')}>Logout</Link></li>
-//             </>
-//           )}
-//         </ul>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default Navbar;
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-function Navbar() {
-  // Check if user is logged in (simplified, using localStorage)
+const Navbar = () => {
   const isLoggedIn = localStorage.getItem('role');
+  const location = useLocation();
+
+  const navLinks = [
+    { to: '/assignments', label: 'Assignments' },
+    { to: '/schedule', label: 'Schedule' },
+    { to: '/recommendations', label: 'Study Tips' },
+    { to: '/trends', label: 'Trends' },
+    { to: '/create-task', label: 'Create Task' },
+    { to: '/view-tasks', label: 'View Tasks' },
+    { to: '/student', label: 'Student Dashboard' },
+    { to: '/messages', label: 'Messages' },
+  ];
+
+  if (localStorage.getItem('role') === 'tutor') {
+    navLinks.splice(5, 0, { to: '/tutor', label: 'Tutor Dashboard' });
+  }
 
   return (
-    <nav>
-      <div className="nav-container">
-        <div className="logo">
-          <Link to="/">
-            <img src="/studyBuddyLogo.svg" alt="Study Buddy Logo" className="logo-img" />
-            Study Buddy
-          </Link>
-        </div>
+    <nav
+      style={{
+        backgroundColor: '#ffffff',
+        padding: '14px 32px',
+        borderBottom: '1px solid #e5e7eb',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 999,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        {/* Logo + Title */}
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img
+            src="/studyBuddyLogo.svg"
+            alt="Study Buddy Logo"
+            style={{ height: '40px', marginRight: '12px' }}
+          />
+          <span style={{ fontWeight: 700, fontSize: '20px', color: '#111827' }}>Study Buddy</span>
+        </Link>
 
-        {/* Navigation links or sign options */}
-        <ul>
+        {/* Navigation Links */}
+        <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', margin: 0, padding: 0 }}>
           {!isLoggedIn ? (
-            // Show Sign In/Sign Up if not logged in
             <>
-              <li><Link to="/signup">Sign up</Link></li>
-              <li className="nav-button"><Link to="/login">Log in</Link></li>
+              <li>
+                <Link
+                  to="/signup"
+                  style={navLinkStyle}
+                >
+                  Sign Up
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" style={loginButtonStyle}>Log In</Link>
+              </li>
             </>
           ) : (
-            // Show app features if logged in
             <>
-              <li><Link to="/assignments">Assignments</Link></li>
-              <li><Link to="/schedule">Schedule</Link></li>
-              <li><Link to="/recommendations">Study Tips</Link></li>
-              <li><Link to="/trends">Trends</Link></li>
-              <li><Link to="/create-task">Create Task</Link></li>
-              <li><Link to="/view-tasks">View Tasks</Link></li>
-              {localStorage.getItem('role') === 'tutor' && (
-                <li><Link to="/tutor">Tutor Dashboard</Link></li>
-              )}
-              <li><Link to="/student">Student Dashboard</Link></li>
-              <li><Link to="/messages">Messages</Link></li>
-              <li className="nav-button"><Link to="/login" onClick={() => localStorage.removeItem('role')}>Logout</Link></li>
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    style={{
+                      ...navLinkStyle,
+                      backgroundColor: location.pathname === link.to ? '#f3f4f6' : 'transparent',
+                      borderRadius: '6px',
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  to="/login"
+                  onClick={() => localStorage.removeItem('role')}
+                  style={logoutButtonStyle}
+                >
+                  Logout
+                </Link>
+              </li>
             </>
           )}
         </ul>
       </div>
     </nav>
   );
-}
+};
+
+// ✨ Link styles
+const navLinkStyle = {
+  textDecoration: 'none',
+  color: '#374151',
+  fontWeight: '500',
+  padding: '10px 18px', // more spacing around each link
+  borderRadius: '6px',
+  transition: 'all 0.3s ease',
+  display: 'inline-block',
+};
+
+
+const loginButtonStyle = {
+  backgroundColor: '#8b5cf6',
+  color: '#ffffff',
+  padding: '8px 16px',
+  borderRadius: '6px',
+  fontWeight: '600',
+  textDecoration: 'none',
+  transition: 'background 0.3s ease-in-out',
+};
+
+const logoutButtonStyle = {
+  ...loginButtonStyle,
+  backgroundColor: '#ef4444', // 🔴 logout = red vibe
+};
 
 export default Navbar;

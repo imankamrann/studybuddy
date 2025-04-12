@@ -42,48 +42,36 @@ const StudentDashboard = () => {
             </div>
 
             {/* Quick Actions */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '20px'}}>
                 <h3>Quick Actions</h3>
+           <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                 <button
                     style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
                         cursor: 'pointer',
-                        marginRight: '10px',
                     }}
+                    className='nav-button'
                 >
                     Send Message
                 </button>
                 <button
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
+                  style={{
                         cursor: 'pointer',
-                        marginRight: '10px',
                     }}
+                     className='nav-button'
                 >
                     Create Study Group
                 </button>
                 <button
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
+               style={{
                         cursor: 'pointer',
                     }}
+                     className='nav-button'
                 >
                     Share Resources
                 </button>
             </div>
-        </div>
+            </div> 
+        </div> // div for return
     );
 };
 

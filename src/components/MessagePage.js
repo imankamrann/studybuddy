@@ -1,149 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const MessagePage = () => {
-    // State for managing the selected conversation
     const [selectedConversation, setSelectedConversation] = useState(null);
-
-    // State for managing the new message input
     const [newMessage, setNewMessage] = useState('');
-
-    // State for managing the new conversation input
     const [newConversationRecipient, setNewConversationRecipient] = useState('');
+    const messagesEndRef = useRef(null);
 
-    // Sample data for messages
     const [conversations, setConversations] = useState([
         {
             id: 1,
             sender: 'Tutor',
             messages: [
-                { text: 'Don\'t forget the deadline!', timestamp: '10/24, 3:00 PM' },
-                { text: 'Are you free to meet tomorrow?', timestamp: '10/25, 10:00 AM' },
+                { text: 'Don\'t forget the deadline!', timestamp: '10/24, 3:00 PM', fromMe: false },
+                { text: 'Are you free to meet tomorrow?', timestamp: '10/25, 10:00 AM', fromMe: true },
             ],
         },
         {
             id: 2,
             sender: 'Peer',
-            messages: [
-                { text: 'Let\'s meet tomorrow.', timestamp: '10/23, 4:00 PM' },
-            ],
+            messages: [{ text: 'Let\'s meet tomorrow.', timestamp: '10/23, 4:00 PM', fromMe: false }],
         },
         {
             id: 3,
             sender: 'Group A',
-            messages: [
-                { text: 'New notes uploaded.', timestamp: '10/20, 2:00 PM' },
-            ],
+            messages: [{ text: 'New notes uploaded.', timestamp: '10/20, 2:00 PM', fromMe: false }],
         },
     ]);
 
-    // Function to handle sending a new message
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [selectedConversation]);
+
     const handleSendMessage = () => {
         if (newMessage.trim() === '') return;
 
-        // Add the new message to the selected conversation
-        const updatedConversation = {
-            ...selectedConversation,
-            messages: [
-                ...selectedConversation.messages,
-                { text: newMessage, timestamp: new Date().toLocaleString() },
-            ],
+        const newMsg = {
+            text: newMessage,
+            timestamp: new Date().toLocaleString(),
+            fromMe: true,
         };
 
-        // Update the selected conversation
+        const updatedConversation = {
+            ...selectedConversation,
+            messages: [...selectedConversation.messages, newMsg],
+        };
+
         setSelectedConversation(updatedConversation);
 
-        // Update the conversations list
-        setConversations((prevConversations) =>
-            prevConversations.map((conversation) =>
-                conversation.id === updatedConversation.id ? updatedConversation : conversation
+        setConversations((prev) =>
+            prev.map((conv) =>
+                conv.id === updatedConversation.id ? updatedConversation : conv
             )
         );
 
-        // Clear the input field
         setNewMessage('');
     };
 
-    // Function to handle starting a new conversation
     const handleStartNewConversation = () => {
-        if (newConversationRecipient.trim() === '') return;
+        if (!newConversationRecipient.trim()) return;
 
-        // Create a new conversation object
-        const newConversation = {
-            id: conversations.length + 1, // Generate a new ID
-            sender: newConversationRecipient,
+        const newConv = {
+            id: conversations.length + 1,
+            sender: newConversationRecipient.trim(),
             messages: [],
         };
 
-        // Add the new conversation to the list
-        setConversations([...conversations, newConversation]);
-
-        // Clear the input field
+        setConversations([...conversations, newConv]);
+        setSelectedConversation(newConv);
         setNewConversationRecipient('');
     };
 
     return (
-        <div>
+        <div style={{ padding: '20px' }}>
             <h2>Messages</h2>
             <div style={{ display: 'flex' }}>
-                {/* Message Inbox */}
-                <div style={{ width: '30%', borderRight: '1px solid #ccc', paddingRight: '20px' }}>
-                    {/* Button to start a new conversation */}
-                    <div style={{ marginBottom: '20px' }}>
-                        <button
-                            onClick={handleStartNewConversation}
-                            style={{ width: '100%', padding: '10px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-                            className='nav-button'
-                        >
-                            Start New Conversation
-                        </button>
-                    </div>
-
-                    {/* List of conversations */}
+                {/* Sidebar */}
+                <div style={{ width: '30%', paddingRight: '20px', borderRight: '1px solid #ccc' }}>
+                    <input
+                        type="text"
+                        placeholder="New recipient..."
+                        value={newConversationRecipient}
+                        onChange={(e) => setNewConversationRecipient(e.target.value)}
+                        style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
+                    />
+                    <button
+                        onClick={handleStartNewConversation}
+                        style={{ width: '100%', padding: '10px', marginBottom: '20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px' }}
+                    >
+                        Start New Conversation
+                    </button>
                     <ul style={{ listStyle: 'none', padding: 0 }}>
-                        {conversations.map((conversation) => (
-                            <li
-                                key={conversation.id}
-                                onClick={() => setSelectedConversation(conversation)}
-                                style={{
-                                    padding: '10px',
-                                    borderBottom: '1px solid #eee',
-                                    cursor: 'pointer',
-                                    backgroundColor: selectedConversation?.id === conversation.id ? '#e0e0e0' : 'transparent',
-                                }}
-                            >
-                                <strong>{conversation.sender}</strong>
-                                <p>{conversation.messages[0]?.text || 'No messages yet'}</p>
-                                <em>{conversation.messages[0]?.timestamp || ''}</em>
-                            </li>
-                        ))}
+                        {conversations.map((conv) => {
+                            const last = conv.messages[conv.messages.length - 1];
+                            return (
+                                <li
+                                    key={conv.id}
+                                    onClick={() => setSelectedConversation(conv)}
+                                    style={{
+                                        padding: '10px',
+                                        borderBottom: '1px solid #eee',
+                                        cursor: 'pointer',
+                                        backgroundColor: selectedConversation?.id === conv.id ? '#f0f0f0' : 'transparent'
+                                    }}
+                                >
+                                    <strong>{conv.sender}</strong>
+                                    <p>{last?.text || 'No messages yet'}</p>
+                                    <em>{last?.timestamp}</em>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
 
-                {/* Selected Conversation */}
+                {/* Chat area */}
                 <div style={{ flex: 1, paddingLeft: '20px' }}>
                     {selectedConversation ? (
                         <>
                             <h3>{selectedConversation.sender}</h3>
-                            <div style={{ height: '60vh', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '5px', marginBottom: '20px' }}>
-                                {selectedConversation.messages.map((message, index) => (
-                                    <div key={index} style={{ marginBottom: '10px' }}>
-                                        <strong>{message.sender || 'You'}:</strong> {message.text}{' '}
-                                        <em>{message.timestamp}</em>
+                            <div style={{
+                                height: '60vh',
+                                overflowY: 'auto',
+                                border: '1px solid #ccc',
+                                padding: '10px',
+                                marginBottom: '10px',
+                                borderRadius: '5px',
+                                backgroundColor: '#f9f9f9'
+                            }}>
+                                {selectedConversation.messages.map((msg, i) => (
+                                    <div key={i} style={{ marginBottom: '10px', textAlign: msg.fromMe ? 'right' : 'left' }}>
+                                        <div style={{
+                                            display: 'inline-block',
+                                            padding: '10px',
+                                            backgroundColor: msg.fromMe ? '#d1ecf1' : '#e2e3e5',
+                                            borderRadius: '10px',
+                                            maxWidth: '70%'
+                                        }}>
+                                            <p style={{ margin: 0 }}>{msg.text}</p>
+                                            <small>{msg.timestamp}</small>
+                                        </div>
                                     </div>
                                 ))}
+                                <div ref={messagesEndRef}></div>
                             </div>
                             <div style={{ display: 'flex', gap: '10px' }}>
                                 <input
                                     type="text"
-                                    placeholder="Type your message..."
+                                    placeholder="Type a message..."
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                                    style={{ flex: 1, padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                                    style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
                                 />
                                 <button
                                     onClick={handleSendMessage}
-                                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px' }}
                                 >
                                     Send
                                 </button>
